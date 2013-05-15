@@ -1,0 +1,11 @@
+<h5>You selected post <%= params[:id] %> </h5>
+
+Title: <%= @post.title %>
+<br>
+Url: <%= @post.url %>
+<br>
+Description: <%= @post.url %>
+<br>
+User name: <%= @post.user.name %>
+<br>
+<%= link_to "Back to main posts page", posts_path %>
