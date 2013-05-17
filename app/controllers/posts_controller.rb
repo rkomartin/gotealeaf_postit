@@ -12,6 +12,9 @@ class PostsController < ApplicationController
     if @post.save
       flash[:notice] = "New Post Successfully Created!"
       redirect_to posts_path
+    else
+      flash[:alert] = "Validation Errors with this Post!"
+      redirect_to new_post_path
     end
   end
 

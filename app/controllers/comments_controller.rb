@@ -13,6 +13,9 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "New Comment Successfully Created!"
       redirect_to post_comments_path
+    else
+      flash[:alert] = "Validation Errors with this Comment!"
+      redirect_to new_post_comment_path(params[:post_id])
     end
   end
 end

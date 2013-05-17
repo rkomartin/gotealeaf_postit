@@ -5,4 +5,8 @@ class Post < ActiveRecord::Base
   has_many :categories, through: :post_categories
 
   has_many :comments
+
+  validates :title, presence: true
+  validates :url, presence: true
+  validates :description, presence: true
 end
