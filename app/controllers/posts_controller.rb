@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(params[:post])
-    @post.user_id = 1
+    @post.user_id = 1 #TODO Use user_id from authentication
     if @post.save
       flash[:notice] = "New Post Successfully Created!"
       redirect_to posts_path

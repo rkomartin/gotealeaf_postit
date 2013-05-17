@@ -1,0 +1,11 @@
+<h5>Comments for post <%= params[:post_id] %></h5>
+
+<ul>
+  <% @comments.each do |comment| %>
+    <li><%= comment.content %>   <%= comment.user.name %></li>
+  <% end %>
+</ul>
+<br>
+<%= link_to "Create new comment", new_post_comment_path(params[:post_id]) %>
+<br>
+<%= link_to "Back to post summary page", post_path(params[:post_id]) %>

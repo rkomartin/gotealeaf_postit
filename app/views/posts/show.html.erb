@@ -7,5 +7,7 @@ Url: <%= @post.url %>
 Description: <%= @post.url %>
 <br>
 User name: <%= @post.user.name %>
+<br><br>
+<%= link_to "Show comments", post_comments_path(@post.id) %>
 <br>
 <%= link_to "Back to main posts page", posts_path %>
