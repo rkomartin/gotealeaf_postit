@@ -1,0 +1,20 @@
+<% if @post.errors.any? %>
+  <div class='alert alert-error'>
+    <%= @post.errors.full_messages.join("; ") %>
+  </div>
+<% end %>
+
+<%= form_for @post do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  </br>
+  <%= f.label :url %>
+  <%= f.text_field :url %>
+  </br>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  </br>
+  <%= f.submit %>
+<% end %>
+</br>
+<%= link_to "Back to main posts page", posts_path %>

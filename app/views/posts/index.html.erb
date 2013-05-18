@@ -1,4 +1,4 @@
-<h5>Welcome to the PostIt application!</h5>
+<h5>Welcome to RK PostIt application!</h5>
 
 <table>
   <tr>
@@ -6,7 +6,7 @@
     <th>Summary</th>
     <th>User</th>
     <th>Show</th>
-    <th></th>
+    <th>Edit</th>
   </tr>
 
   <% @posts.each do |post| %>
@@ -15,6 +15,7 @@
     <td><%= post.url %></td>
     <td><%= post.user.name %></td>
     <td><%= link_to "Show", post_path(post.id) %></td>
+    <td><%= link_to "Edit", edit_post_path(post.id) %></td>
   </tr>
   <% end %>
 </table>
