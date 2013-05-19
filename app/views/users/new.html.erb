@@ -1,0 +1,17 @@
+<h5>Register a new user</h5>
+
+<% if @user.errors.any? %>
+  <div class='alert alert-error'>
+    <%= @user.errors.full_messages.join("; ") %>
+  </div>
+<% end %>
+
+<%= form_for @user do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <br>
+  <%= f.submit "Register" %>
+<% end %>

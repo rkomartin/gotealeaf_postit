@@ -6,7 +6,9 @@
     <th>Summary</th>
     <th>User</th>
     <th>Show</th>
-    <th>Edit</th>
+    <% if logged_in? %>
+      <th>Edit</th>
+    <% end %>
   </tr>
 
   <% @posts.each do |post| %>
@@ -15,9 +17,14 @@
     <td><%= post.url %></td>
     <td><%= post.user.name %></td>
     <td><%= link_to "Show", post_path(post.id) %></td>
-    <td><%= link_to "Edit", edit_post_path(post.id) %></td>
+    <% if logged_in? %>
+      <td><%= link_to "Edit", edit_post_path(post.id) %></td>
+    <% end %>
   </tr>
   <% end %>
 </table>
 <br>
-<%= link_to "Create new post", new_post_path %>
+
+<% if logged_in? %>
+  <%= link_to "Create new post", new_post_path %>
+<% end %>

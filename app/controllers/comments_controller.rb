@@ -1,15 +1,19 @@
 class CommentsController < ApplicationController
+  before_filter :require_user, only: [:new, :create]
+
   def index
-    @comments = Post.find_by_id(params[:post_id]).comments
+    @post = Post.find_by_id(params[:post_id])
+    @comments = @post.comments
   end
 
   def new
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new
+    @comment.content = params[:content]
     @comment.post_id = params[:post_id]
-    @comment.user_id = 1 #TODO Use user_id from authentication
+    @comment.user_id = session[:user_id]
     if @comment.save
       flash[:notice] = "New comment successfully created!"
       redirect_to post_comments_path

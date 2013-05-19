@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_filter :require_user, only: [:new, :create, :edit, :update]
+
   def index
     @posts = Post.all
   end
@@ -9,7 +11,8 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(params[:post])
-    @post.user_id = 1 #TODO Use user_id from authentication
+    @post.user_id = session[:user_id]
+
     if @post.save
       flash[:notice] = "New post successfully created!"
       redirect_to posts_path
@@ -20,10 +23,21 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+
+    if @post.user_id != session[:user_id]
+      flash[:error] = "Posts can be edited only by owner"
+      redirect_to posts_path
+    end
   end
 
   def update
     @post = Post.find(params[:id])
+
+    if @post.user_id != session[:user_id]
+      flash[:error] = "Posts can be edited only by owner"
+      redirect_to posts_path
+    end
+    
     if @post.update_attributes(params[:post])
       flash[:notice] = "Post was successfully updated!"
       redirect_to post_path(@post.id)

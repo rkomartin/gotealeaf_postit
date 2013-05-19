@@ -1,6 +1,11 @@
 <h5>Create a new comment</h5>
-<form action=<%= post_comments_url %> method="post">
-  Content: <input type="text" name="comment[content]">
+<% if logged_in? %>
+  <%= form_tag post_comments_path do %>
+    <%= label_tag :content %>
+    <%= text_field_tag :content %>
+    <br>
+    <%= submit_tag "Create it!" %>
+  <% end %>
   <br>
-  <input type="submit" value="Create Comment">
-</form>
+<% end %>
+<%= link_to "Back to post summary page", post_path(params[:post_id]) %>

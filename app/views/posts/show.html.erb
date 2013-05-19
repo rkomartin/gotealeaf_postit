@@ -12,8 +12,11 @@
 <strong>User name:</strong>
 <%= @post.user.name %>
 <br><br>
-<%= link_to "Edit post", edit_post_path(@post.id) %>
-<br>
+
+<% if logged_in? %>
+  <%= link_to "Edit post", edit_post_path(@post.id) %>
+  <br>
+<% end %>
 <%= link_to "Show comments", post_comments_path(@post.id) %>
 <br>
 <%= link_to "Back to main posts page", posts_path %>
