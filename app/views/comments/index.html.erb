@@ -1,11 +1,30 @@
 <h5>Comments for post <%= @post.title %></h5>
 
-<ul>
+<table>
+  <tr>
+    <th>Content</th>
+    <th>User</th>
+    <th>Net votes</th>
+    <% if logged_in? %>
+      <th>Like</th>
+      <th>Un-like</th>
+    <% end %>
+  </tr>
+
   <% @comments.each do |comment| %>
-    <li><%= comment.content %>   <%= comment.user.name %></li>
+  	<tr>
+	    <td><%= comment.content %></td>
+	    <td><%= comment.user.name %></td>
+	    <td><%= comment.total_votes %></td>
+	    <% if logged_in? %>
+	      <td><%= link_to "Like", vote_post_comment_path(@post.id, comment.id, vote: true), method: 'post' %></td>
+	      <td><%= link_to "Un-like", vote_post_comment_path(@post.id, comment.id, vote: false), method: 'post' %></td>
+	    <% end %>
+    </tr>
   <% end %>
-</ul>
+</table>
 <br>
+
 <% if logged_in? %>
 	<%= link_to "Create new comment", new_post_comment_path(@post.id) %>
 <% end %>

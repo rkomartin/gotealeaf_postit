@@ -6,8 +6,11 @@
     <th>Summary</th>
     <th>User</th>
     <th>Show</th>
+    <th>Net votes</th>
     <% if logged_in? %>
       <th>Edit</th>
+      <th>Like</th>
+      <th>Un-like</th>
     <% end %>
   </tr>
 
@@ -17,8 +20,11 @@
     <td><%= post.url %></td>
     <td><%= post.user.name %></td>
     <td><%= link_to "Show", post_path(post.id) %></td>
+    <td><%= post.total_votes %></td>
     <% if logged_in? %>
       <td><%= link_to "Edit", edit_post_path(post.id) %></td>
+      <td><%= link_to "Like", vote_post_path(post.id, vote: true), method: 'post' %></td>
+      <td><%= link_to "Un-like", vote_post_path(post.id, vote: false), method: 'post' %></td>
     <% end %>
   </tr>
   <% end %>
