@@ -3,6 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    @posts.sort! { |x,y| y.total_votes <=> x.total_votes }
   end
 
   def new
@@ -53,6 +54,7 @@ class PostsController < ApplicationController
       redirect_to posts_path
     else
       @comments = @post.comments
+      @comments.sort! { |x,y| y.total_votes <=> x.total_votes }
     end
   end
 
