@@ -1,22 +1,58 @@
-<h5>Showing <%= @post.title %> </h5>
+<div class="well well-large">
+  <h3>Showing <%= @post.title %></h3>
 
-<strong>Title:</strong>
-<%= @post.title %>
-<br>
-<strong>Url:</strong>
-<%= @post.url %>
-<br>
-<strong>Description:</strong>
-<%= @post.url %>
-<br>
-<strong>User name:</strong>
-<%= @post.user.name %>
-<br><br>
-
-<% if logged_in? %>
-  <%= link_to "Edit post", edit_post_path(@post.id) %>
+  <strong>Title:</strong>
+  <%= @post.title %>
   <br>
-<% end %>
-<%= link_to "Show comments", post_comments_path(@post.id) %>
-<br>
-<%= link_to "Back to main posts page", posts_path %>
+  <strong>Url:</strong>
+  <%= @post.url %>
+  <br>
+  <strong>Description:</strong>
+  <%= @post.url %>
+  <br>
+  <strong>User name:</strong>
+  <%= @post.user.name %>
+  <br><br>
+
+  <div class="btn">
+    <% if logged_in? %>
+      <%= link_to "Edit post", edit_post_path(@post.id) %>
+      <br>
+    <% end %>
+  </div>
+
+  <div class="btn">
+    <%= link_to "Back to main posts page", posts_path %>
+  </div>
+</div>
+
+<h5>
+  Comments for this post 
+  <% if logged_in? %>
+    (<%= link_to "Create new comment", new_post_comment_path(@post.id) %>)
+  <% end %>
+</h5>
+
+<table class="table table-hover">
+  <tr>
+    <th>Content</th>
+    <th>User</th>
+    <th>Net votes</th>
+    <% if logged_in? %>
+      <th>Like</th>
+      <th>Un-like</th>
+    <% end %>
+  </tr>
+
+  <% @comments.each do |comment| %>
+  	<tr>
+	    <td><%= comment.content %></td>
+	    <td><%= comment.user.name %></td>
+	    <td><span id="comment_<%=comment.id%>_votes"><%= comment.total_votes %></span></td>
+	    <% if logged_in? %>
+	      <td><%= link_to '<i class="icon-chevron-up"></i>'.html_safe, vote_post_comment_path(@post.id, comment.id, vote: true), method: 'post', remote: true %></td>
+	      <td><%= link_to '<i class="icon-chevron-down"></i>'.html_safe, vote_post_comment_path(@post.id, comment.id, vote: false), method: 'post', remote: true %></td>
+	    <% end %>
+    </tr>
+  <% end %>
+</table>

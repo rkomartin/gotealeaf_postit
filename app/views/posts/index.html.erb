@@ -1,11 +1,12 @@
-<h5>Welcome to RK PostIt application!</h5>
+<div class="well well-large">
+  <h3>Welcome to RK PostIt application!</h3>
+</div>
 
-<table>
+<table class="table table-hover">
   <tr>
     <th>Title</th>
     <th>Summary</th>
     <th>User</th>
-    <th>Show</th>
     <th>Net votes</th>
     <% if logged_in? %>
       <th>Edit</th>
@@ -16,15 +17,14 @@
 
   <% @posts.each do |post| %>
   <tr>
-    <td><%= post.title %></td>
+    <td><%= link_to post.title, post_path(post.id) %></td>
     <td><%= post.url %></td>
     <td><%= post.user.name %></td>
-    <td><%= link_to "Show", post_path(post.id) %></td>
-    <td><%= post.total_votes %></td>
+    <td><span id="post_<%=post.id%>_votes"><%= post.total_votes %></span></td>
     <% if logged_in? %>
-      <td><%= link_to "Edit", edit_post_path(post.id) %></td>
-      <td><%= link_to "Like", vote_post_path(post.id, vote: true), method: 'post' %></td>
-      <td><%= link_to "Un-like", vote_post_path(post.id, vote: false), method: 'post' %></td>
+      <td><%= link_to "→", edit_post_path(post.id) %></td>
+      <td><%= link_to '<i class="icon-chevron-up"></i>'.html_safe, vote_post_path(post.id, vote: true), method: 'post', remote: true %></td>
+      <td><%= link_to '<i class="icon-chevron-down"></i>'.html_safe, vote_post_path(post.id, vote: false), method: 'post', remote: true %></td>
     <% end %>
   </tr>
   <% end %>
@@ -32,5 +32,7 @@
 <br>
 
 <% if logged_in? %>
-  <%= link_to "Create new post", new_post_path %>
+  <div class="btn">
+    <%= link_to "Create new post", new_post_path %>
+  </div>
 <% end %>

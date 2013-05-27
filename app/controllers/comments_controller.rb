@@ -1,10 +1,5 @@
 class CommentsController < ApplicationController
-  before_filter :require_user, only: [:new, :create]
-
-  def index
-    @post = Post.find_by_id(params[:post_id])
-    @comments = @post.comments
-  end
+  before_filter :require_user
 
   def new
   end
@@ -16,7 +11,7 @@ class CommentsController < ApplicationController
     @comment.user_id = session[:user_id]
     if @comment.save
       flash[:notice] = "New comment successfully created!"
-      redirect_to post_comments_path
+      redirect_to post_path(params[:post_id])
     else
       flash[:alert] = "Comment can't be blank!"
       redirect_to new_post_comment_path(params[:post_id])
@@ -24,10 +19,12 @@ class CommentsController < ApplicationController
   end
 
   def vote
-    comment = Comment.find(params[:id])
-    Vote.create(voteable: comment, user: current_user, vote: params[:vote])
+    @comment = Comment.find(params[:id])
+    Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
 
-    flash[:notice] = "Your vote was counted!"
-    redirect_to post_comments_path
+    respond_to do |format|
+      format.html { redirect_to post_path(params[:post_id]) }
+      format.js
+    end
   end
 end

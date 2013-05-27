@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :require_user, only: [:new, :create, :edit, :update]
+  before_filter :require_user, only: [:new, :create, :edit, :update, :vote]
 
   def index
     @posts = Post.all
@@ -51,14 +51,18 @@ class PostsController < ApplicationController
     if @post.nil?
       flash[:alert] = "This post does NOT exist!"
       redirect_to posts_path
+    else
+      @comments = @post.comments
     end
   end
 
   def vote
-    post = Post.find(params[:id])
-    Vote.create(voteable: post, user: current_user, vote: params[:vote])
+    @post = Post.find(params[:id])
+    Vote.create(voteable: @post, user: current_user, vote: params[:vote])
 
-    flash[:notice] = "Your vote was counted!"
-    redirect_to posts_path
+    respond_to do |format|
+      format.html { redirect_to posts_path }
+      format.js
+    end
   end
 end
