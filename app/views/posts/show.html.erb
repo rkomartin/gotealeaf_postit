@@ -14,12 +14,12 @@
   <%= @post.user.name %>
   <br><br>
 
-  <div class="btn">
-    <% if logged_in? %>
+  <% if logged_in? %>
+    <div class="btn">
       <%= link_to "Edit post", edit_post_path(@post.id) %>
       <br>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <div class="btn">
     <%= link_to "Back to main posts page", posts_path %>
